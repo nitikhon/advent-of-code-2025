@@ -10,20 +10,20 @@ import (
 )
 
 func main() {
-	input_file := flag.String("input", "example.txt", "Name of the input file")
+	inputFile := flag.String("input", "example.txt", "Name of the input file")
 	flag.Parse()
 
-	fmt.Printf("Reading input from: %s\n", *input_file)
+	fmt.Printf("Reading input from: %s\n", *inputFile)
 
-	input, err := os.Open(*input_file)
+	input, err := os.Open(*inputFile)
 	if err != nil {
 		log.Printf("Error opening input file: %v\n", err)
 		return
 	}
 	defer input.Close()
 
-	zero_counter := 0
-	current_positon := 50 // starts at 50
+	cnt := 0
+	currPos := 50 // starts at 50
 
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
@@ -37,21 +37,21 @@ func main() {
 		}
 		
 		if rotation == 'R' {
-			if current_positon + distance > 99 {
-				current_positon = (current_positon + distance) % 100
+			if currPos + distance > 99 {
+				currPos = (currPos + distance) % 100
 			} else {
-				current_positon += distance
+				currPos += distance
 			}
 		} else {
-			if current_positon - distance < 0 {
-				current_positon = 100 - (distance - current_positon)
+			if currPos - distance < 0 {
+				currPos = 100 - (distance - currPos)
 			} else {
-				current_positon -= distance
+				currPos -= distance
 			}
 		}
 
-		if current_positon == 0 {
-			zero_counter++
+		if currPos == 0 {
+			cnt++
 		}
 	}
 
@@ -59,5 +59,5 @@ func main() {
 		log.Printf("Error during scanning: %v\n", err)
 	}
 
-	fmt.Printf("The Password is %d\n", zero_counter)
+	fmt.Printf("The Password is %d\n", cnt)
 }
