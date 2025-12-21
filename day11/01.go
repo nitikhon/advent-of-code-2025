@@ -12,7 +12,7 @@ import (
 var nodes map[string][]string = make(map[string][]string)
 var ans int = 0
 
-func dfs1(node string) {
+func dfs(node string) {
 	if node == "out" {
 		ans++
 		return
